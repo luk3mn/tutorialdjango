@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from django.views.generic import DetailView, ListView
+# DetailView -> Mostra somente um
+# ListView -> Lista vários posts
+from .models import Post
 
-# Create your views here.
+class PostListView(ListView):
+    model = Post
+
+class PostDetailView(DetailView):
+    model = Post

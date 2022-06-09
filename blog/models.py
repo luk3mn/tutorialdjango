@@ -11,6 +11,7 @@
 #   linguagem sql de acordo com o banco de dados
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -23,6 +24,13 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True) # 'auto_now_add=True' add automaticamente a data e hora da criacao do artigo
     updated = models.DateTimeField(auto_now=True) # 'auto_now=True' atualiza o campo a cada atualização
 
+    class Meta:
+        ordering = ("-created",)
+
     # DENTRO DA CLASSE POST -> Visualiza na lista de post da interface 'admin' o titulo do post
     def __str__(self):
         return self.title
+
+    # Cria um esquema para clicar nos links e redirecionar as páginas dos postes
+    def get_absolute_url(self):
+        return reverse("blog:detail", kwargs={"slug": self.slug}) # serve para definir a url de um recurso "post"
